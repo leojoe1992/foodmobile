@@ -4,6 +4,7 @@ import router from './router'
 //引入第三方组件库 mint-ui
 import MintUI from "mint-ui"
 import VueAwesomeSwiper from 'vue-awesome-swiper'
+import store from './store'
 
 // require styles
 import 'swiper/dist/css/swiper.css'
@@ -25,6 +26,7 @@ Vue.use(Vant);
 Vue.use(MintUI)
 
 new Vue({
+  store,
   router,
   render: h => h(App)
 }).$mount('#app')

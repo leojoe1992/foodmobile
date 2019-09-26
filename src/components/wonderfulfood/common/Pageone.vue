@@ -4,9 +4,7 @@
       <span class="tips">“你们去征服世界,我只想征服一个人的胃和心”</span>
     </p>
     <div class="videocard">
-      <div class="card-item firstchild"></div>
-      <div class="card-item secondchild"></div>
-      <div class="card-item lastchild"></div>
+      
     </div>
     <div class="navmenu">
       <div class="navmenu-item">
@@ -159,39 +157,7 @@ export default {
   margin-bottom: 16px;
 }
 
-.videocard {
-  margin: 0 auto;
-  height: 350px;
-  position: relative;
-  box-sizing: border-box;
-  padding-left: 2rem;
-  overflow: hidden;
-}
-.card-item {
-  height: 100%;
-  width: 75%;
-  float: left;
-  border-radius: 2rem;
-  position: absolute;
-}
-.firstchild {
-  background: darkgreen;
-  z-index: 20;
-}
-.secondchild {
-  top: 17.5px;
-  height: 90%;
-  background: darksalmon;
-  z-index: 19;
-  left: 3.5rem;
-}
-.lastchild {
-  top: 35px;
-  height: 80%;
-  background: darkseagreen;
-  z-index: 18;
-  left: 5rem;
-}
+
 .navmenu {
   display: flex;
   justify-content: space-between;

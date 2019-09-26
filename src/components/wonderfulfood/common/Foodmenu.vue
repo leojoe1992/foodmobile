@@ -119,9 +119,7 @@
           </div>
         </div>
       </swiper-slide>
-      <swiper-slide>
-        <div class="space">3</div>
-      </swiper-slide>
+      
     </swiper>
   </div>
 </template>

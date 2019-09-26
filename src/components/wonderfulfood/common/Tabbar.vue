@@ -6,12 +6,15 @@
         <page-one></page-one>
       </mt-tab-container-item>
       <mt-tab-container-item id="foodshow">
+        
         <page-two></page-two>
       </mt-tab-container-item>
       <mt-tab-container-item id="eatwhat">
         <page-three></page-three>
       </mt-tab-container-item>
-      <mt-tab-container-item id="me">第四页</mt-tab-container-item>
+      <mt-tab-container-item id="me">
+        <page-four></page-four>
+      </mt-tab-container-item>
     </mt-tab-container>
     <mt-tabbar v-model="active" fixed>
       <mt-tab-item id="foodset" @click.native="changeState(0)">
@@ -55,6 +58,7 @@ import Header from "./Header";
 import Pageone from "./Pageone";
 import Pagetwo from "./Pagetwo";
 import Pagethree from "./Pagethree";
+import Pagefour from "./Pagefour";
 export default {
   data() {
     return {
@@ -68,6 +72,11 @@ export default {
         { isSelect: false }
       ]
     };
+  },
+  watch: {
+    active() {
+      this.$store.commit('changeActive',this.active)
+    }
   },
   methods: {
     changeState(n) {
@@ -84,7 +93,31 @@ export default {
           this.currentIndex[i].isSelect = false;
         }
       }
+    },
+    initTabbar() {
+      this.active = this.$store.state.active;
+      for(let item of this.currentIndex) {
+        item.isSelect = false;
+      }
+      switch(this.active) {
+        case 'foodset':
+          this.currentIndex[0].isSelect = true;
+          break;
+        case 'foodshow':
+          this.currentIndex[1].isSelect = true;
+          break;
+        case 'eatwhat':
+          this.currentIndex[2].isSelect = true;
+          break;
+        case 'me':
+          this.currentIndex[3].isSelect = true;
+          break;
+      }
     }
+  },
+  created:function(){
+    
+    this.initTabbar();
   },
   components: {
     "tabbaricon": Tabbaricon,
@@ -92,6 +125,7 @@ export default {
     "page-one":Pageone,
     "page-two":Pagetwo,
     "page-three":Pagethree,
+    "page-four":Pagefour,
   }
 };
 </script>
