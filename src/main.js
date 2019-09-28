@@ -5,6 +5,7 @@ import router from './router'
 import MintUI from "mint-ui"
 import VueAwesomeSwiper from 'vue-awesome-swiper'
 import store from './store'
+import axios from 'axios'
 
 // require styles
 import 'swiper/dist/css/swiper.css'
@@ -24,6 +25,11 @@ import 'vant/lib/index.css';
 
 Vue.use(Vant);
 Vue.use(MintUI)
+axios.defaults.withCredentials=true;
+//配置基础路径,方便日后修改服务器地址
+axios.defaults.baseURL="http://127.0.0.1:8080/"
+//注册
+Vue.prototype.axios=axios;
 
 new Vue({
   store,
