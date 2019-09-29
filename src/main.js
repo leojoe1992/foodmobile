@@ -22,15 +22,16 @@ import('mint-ui/lib/style.css')
 import"./font/iconfont.css"
 import Vant from 'vant';
 import 'vant/lib/index.css';
-
+import qs from 'qs'
 Vue.use(Vant);
 Vue.use(MintUI)
 axios.defaults.withCredentials=true;
 //配置基础路径,方便日后修改服务器地址
 axios.defaults.baseURL="http://127.0.0.1:8080/"
+axios.defaults.headers.post['Content-Type'] = 'application/x-www-form-urlencoded';
 //注册
-Vue.prototype.axios=axios;
-
+Vue.prototype.axios=axios; 
+Vue.prototype.qs = qs;
 new Vue({
   store,
   router,

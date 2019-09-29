@@ -2,6 +2,7 @@ const express=require("express");
 const session=require("express-session");
 const cors=require("cors");
 const mysql=require("mysql");
+const bodyParser=require('body-parser');
 var pool=mysql.createPool({
   host:"127.0.0.1",
   user:"root",
@@ -12,7 +13,9 @@ var pool=mysql.createPool({
 })
 var server=express();
 server.listen(8080);
-
+server.use(bodyParser.urlencoded({
+  extended:false
+}));
 server.use(cors({
   origin:["http://127.0.0.1:5050","http://localhost:5050"],
   credentials:true
@@ -23,6 +26,7 @@ server.use(session({
   saveUninitialized:true //保存初始化数据
 }))
 server.use(express.static("public"));
+
 server.get("/login",(req,res)=>{
   var $uname=req.query.uname;
   var $upwd=req.query.upwd;
@@ -49,8 +53,36 @@ server.get("/load",(req,res)=>{
   if(uname==undefined){
     res.send({code:-1,msg:"请登录"})
   }else{res.send({code:1,uname:uname})}
+})
+server.get("/hasuname",(req,res)=>{
+  var uname=req.query.uname;
+  var sql="SELECT id From fm_login WHERE uname=?";
+  pool.query(sql,[uname],(err,result)=>{
+    if(err)throw err;
+    if(result.length==0){
+      res.send({code:1,msg:"用户名可用"})
+    }else{
+      res.send({code:-1,msg:"用户名已经被占用"})
+    }
+  })
+})
+
+server.post("/reg",(req,res)=>{
   
- 
+  var obj=req.body;
+  var uname=obj.uname;
+  var upwd=obj.upwd;
+  var sql="INSERT INTO fm_login SET ?";
+  console.log(obj);
+  console.log(obj.uname)
+  pool.query(sql,[obj],(err,result)=>{
+    if(err)throw err;
+    if(result.affectedRows>0){
+      res.send({code:1,msg:"注册成功"})
+    }else{
+      res.send({code:-1,msg:"注册失败"})
+    }
+  })
 })
 
 server.get("/product",(req,res)=>{

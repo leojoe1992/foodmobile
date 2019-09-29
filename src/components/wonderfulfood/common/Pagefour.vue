@@ -64,11 +64,11 @@
       </div>
     </div>
     <!-- 未登录状态 -->
-    <div class="offline" v-if="false">
+    <div v-if="!isLogin" class="offline">
       <img src="../../../assets/offline.png" alt />
     </div>
     <!-- 登录后显示我的足迹 -->
-    <div class="myhistory">
+    <div v-if="isLogin" class="myhistory">
       <h2>我的足迹</h2>
       <div class="historycard">
         <div class="mydate">
@@ -246,8 +246,11 @@ export default {
   width: 2rem;
   height: 2.2rem;
 }
+.offline{
+  text-align: center;
+}
 .offline img {
-  width: 100%;
+  width: 80%;
 }
 .myhistory {
   padding: 1rem;
