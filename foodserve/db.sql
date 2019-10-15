@@ -3,6 +3,12 @@
 
 -- #功能一:创建表xz_login 用户登录表
 -- USE xz;
+CREATE TABLE user_content(
+  id INT PRIMARY KEY AUTO_INCREMENT,
+  uname VARCHAR(50),
+  content VARCHAR(2000),
+  pic VARCHAR(65535)
+);
 CREATE TABLE fm_login(
   id INT PRIMARY KEY AUTO_INCREMENT,
   uname VARCHAR(50),

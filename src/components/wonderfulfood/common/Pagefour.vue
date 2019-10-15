@@ -39,8 +39,8 @@
         <span>0</span>
         <p class="info-title">关注</p>
       </div>
-      <div class="articles">
-        <span>0</span>
+      <div @click="jumparticle" class="articles">
+        <span>{{aNum}}</span>
         <p class="info-title">作品</p>
       </div>
     </div>
@@ -145,6 +145,7 @@
 export default {
   data() {
     return {
+      aNum:0,
       score: 3,
       isLogin:true,
       uname:""
@@ -152,6 +153,9 @@ export default {
     };
   },
   methods:{
+    jumparticle(){
+      this.$router.push("./articles")
+    },
     jumpToLogin(){
       this.$router.push("./login")
     },
@@ -169,11 +173,10 @@ export default {
         }else {
           this.isLogin=true;
           this.uname=res.data.uname;
-          console.log(n);
+          this.aNum=res.data.number;
         }
-        
-        
-      })
+      });
+      
       
     }
   },

@@ -119,7 +119,6 @@
           </div>
         </div>
       </swiper-slide>
-      
     </swiper>
   </div>
 </template>
@@ -146,9 +145,14 @@ export default {
     };
   },
   methods:{
-    
+    load(){
+      
+    }
   
   },
+  created(){
+    
+  }
   
 };
 </script>

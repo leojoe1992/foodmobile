@@ -30,8 +30,9 @@
           :normalImage="require('../../../assets/cube.png')"
           :selectedImage="require('../../../assets/addred.png')"
           :focused="currentIndex[1].isSelect"
+          @click.native="record"
         ></tabbaricon>
-        <span class="bartxt">食秀</span>
+        <span class="bartxt">{{show}}</span>
       </mt-tab-item>
       <mt-tab-item id="eatwhat" @click.native="changeState(2)">
         <tabbaricon
@@ -64,6 +65,7 @@ export default {
     return {
       //面板中显示子组件id
       active: "foodset",
+      show:"食秀",
       //创建数组保存图片焦点状态
       currentIndex: [
         { isSelect: true },
@@ -79,14 +81,25 @@ export default {
     }
   },
   methods: {
+    record(){
+        if(this.show=="记录"){
+          this.$router.push("./post")
+        }
+    },
     changeState(n) {
       //函数功能:将当前参数下标
       //对应数组值修改true其它修改false
       //1:创建循环,循环数组中内容
+      if(n==1){
+        this.show="记录";
+
+      }else{
+        this.show="食秀"
+      };
       for (var i = 0; i < this.currentIndex.length; i++) {
         //2:判断如果循环下标与n相等 20
         if (n == i) {
-          //3:当前下标元素true 10:22
+          //3:当前下标元素true 
           this.currentIndex[i].isSelect = true;
         } else {
           //4:其它元素修改false

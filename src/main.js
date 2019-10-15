@@ -11,6 +11,13 @@ import axios from 'axios'
 import 'swiper/dist/css/swiper.css'
 import mandMobile from 'mand-mobile'
 import 'mand-mobile/lib/mand-mobile.css'
+import Antd from 'ant-design-vue'
+import 'ant-design-vue/dist/antd.css'
+Vue.config.productionTip = false
+
+Vue.use(Antd)
+
+/* eslint-disable no-new */
 
 Vue.use(mandMobile)
 

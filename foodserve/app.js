@@ -3,6 +3,9 @@ const session=require("express-session");
 const cors=require("cors");
 const mysql=require("mysql");
 const bodyParser=require('body-parser');
+var multer  = require('multer')
+var fs = require('fs');
+var upload = multer({ dest: 'upload/' });
 var pool=mysql.createPool({
   host:"127.0.0.1",
   user:"root",
@@ -26,6 +29,15 @@ server.use(session({
   saveUninitialized:true //保存初始化数据
 }))
 server.use(express.static("public"));
+//多图上传
+server.post('/upload', upload.single('logo'), function(req, res, next){
+    res.send({ret_code: '0'});
+});
+
+server.get('/form', function(req, res, next){
+    var form = fs.readFileSync('./form.html', {encoding: 'utf8'});
+    res.send(form);
+});
 
 server.get("/login",(req,res)=>{
   var $uname=req.query.uname;
@@ -47,13 +59,7 @@ server.get("/login",(req,res)=>{
     }
   })
 })
-// 加载个人信息路由
-server.get("/load",(req,res)=>{
-  var uname=req.session.uname;
-  if(uname==undefined){
-    res.send({code:-1,msg:"请登录"})
-  }else{res.send({code:1,uname:uname})}
-})
+
 server.get("/hasuname",(req,res)=>{
   var uname=req.query.uname;
   var sql="SELECT id From fm_login WHERE uname=?";
@@ -68,7 +74,6 @@ server.get("/hasuname",(req,res)=>{
 })
 
 server.post("/reg",(req,res)=>{
-  
   var obj=req.body;
   var uname=obj.uname;
   var upwd=obj.upwd;
@@ -78,13 +83,44 @@ server.post("/reg",(req,res)=>{
   pool.query(sql,[obj],(err,result)=>{
     if(err)throw err;
     if(result.affectedRows>0){
-      res.send({code:1,msg:"注册成功"})
+      res.send({code:1,msg:"注册成功"});
+      req.session.uname=uname;
     }else{
       res.send({code:-1,msg:"注册失败"})
     }
   })
 })
-
+//上传图片和内容
+server.post("/sendmsg",(req,res)=>{
+  var uname=req.session.uname;
+  var content=req.body.content;
+  var fileList=req.body.pic;
+  
+  if(uname==undefined){
+    res.send({code:-1,msg:"未登录,先登录"});
+  }else{
+  var sql="INSERT INTO user_content SET ?";
+  pool.query(sql,[{uname,content,fileList}],(err,result)=>{
+    if(err)throw err;
+    if(result.affectedRows>0){
+      res.send({code:1,msg:"发表成功"})
+    }
+  })}
+  
+})
+// 加载个人信息路由
+server.get("/load",(req,res)=>{
+  var uname=req.session.uname;
+  if(uname==undefined){
+    res.send({code:-1,msg:"请登录"})
+  }else{
+    var sql="SELECT id FROM user_content WHERE uname=?"
+    pool.query(sql,[uname],(err,result)=>{
+      if(err)throw err;
+      res.send({code:1,uname:uname,number:result.length})
+    })
+    }
+})
 server.get("/product",(req,res)=>{
   var pno = req.query.pno;
   var ps= req.query.pageSize;

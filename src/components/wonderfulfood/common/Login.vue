@@ -4,6 +4,7 @@
     <h3>用户登录</h3>
     <van-cell-group>
       <van-field
+        
         v-model="username"
         required
         clearable
@@ -78,7 +79,11 @@ export default {
     },
     jumpTosign:function(){
       this.$router.push("./Sign");
-    }
+    },
+   
+  },
+  created(){
+   
   }
 };
 </script>

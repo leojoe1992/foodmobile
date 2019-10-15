@@ -2,7 +2,7 @@
   <div>
     <div><img class="headerbanner" src="../../../assets/springbanner.png" alt=""></div>
     <div class="header">
-      <img class="icon" src="../../../assets/add.png" alt="">
+      <img @click="jump" class="icon" src="../../../assets/add.png" alt="">
       <div class="search">
         <img class="icon" src="../../../assets/search.png" alt="">
         <span>搜索百万免费菜谱</span>
@@ -14,7 +14,11 @@
 </template>
 <script>
 export default {
-  
+  methods:{
+    jump(){
+      this.$router.push("./post")
+    }
+  }
 }
 </script>
 <style scoped>
